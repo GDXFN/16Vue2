@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+    <style type="text/css">
+        body{
+            margin-left:500px;margin-top: 100px
+        }
+        ul{
+            margin:0; padding:0; list-style:none; overflow:hidden;
+        }
+        .box{ width:450px; border:2px blue solid;}
+        li{width:110px; float:left; background-color:#FFFFFF; height:50px; line-height:50px; text-align:center; cursor:pointer;}
+        li.active{background-color:#000000;color:#FFFFFF}
+        .box .content{height:50px; padding:50px;}
+    </style>
+</head>
+<body>
+<div class="box">
+    <x-tab  :cities="cities1"  :contents="contents1"  :n="n"></x-tab>
+   <x-tab  :cities="cities2"  :contents="contents2"  :n="n"></x-tab>
+</div>
+</body>
+<script>
+    Vue.component('x-tab',{	props : ['cities','contents','n'],
+        data(){
+        return {
+            value : this.n
+        }},
+        template:`
+	<div class="box">
+	<ul>
+	<li v-for="city,index of cities" :class="{active:index==value}"	 @mouseover="choose(index)">{{city}}</li>
+	</ul>
+	<div class="content">{{contents[value]}}</div>
+	</div>	`,
+        methods : {
+        choose (index){
+            this.value = index;
+               }
+            }
+        })
+         new Vue({
+             el : ".box",
+             data : {
+                 cities1 : ["one","two","three"],
+                 contents1 : ["这是one的内容","这是two的内容","这是there的内容"],
+                 n : 0,
+                 cities2 : ["运动","阅读","音乐","舞蹈"],
+                 contents2 : ["《篮球》，《排球》，《乒乓球》，《橄榄球》",
+                     "《java web实战》，《Java web 开发》，《javascript》，《响应web》",
+                     "《钢琴》，《小提琴》，《吉他》，《贝斯》",
+                     "《肚皮舞》，《曳步舞》，《街舞》，《迪斯科》"]	}})
+
+</script>
+</html>
